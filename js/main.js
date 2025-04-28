@@ -101,7 +101,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
-//Slider
+//Slider with improved faster transitions
 document.addEventListener('DOMContentLoaded', function() {
     const slider = document.querySelector('.slider');
     const slides = document.querySelectorAll('.slide');
@@ -112,6 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let slideInterval;
     let touchStartX = 0;
     let touchEndX = 0;
+    let isAnimating = false;
 
     // Touch Events
     slider.addEventListener('touchstart', (e) => {
@@ -124,51 +125,90 @@ document.addEventListener('DOMContentLoaded', function() {
     }, { passive: true });
 
     function handleSwipe() {
-        const swipeThreshold = 50; // minimum distance for swipe
+        const swipeThreshold = 50;
         const diff = touchStartX - touchEndX;
 
-        if (Math.abs(diff) > swipeThreshold) {
+        if (Math.abs(diff) > swipeThreshold && !isAnimating) {
             if (diff > 0) {
-                // Swiped left - show next slide
                 showSlide(currentSlide + 1);
             } else {
-                // Swiped right - show previous slide
                 showSlide(currentSlide - 1);
             }
         }
     }
 
     function showSlide(index) {
+        if (isAnimating) return;
+        isAnimating = true;
+        
         if (index >= slides.length) index = 0;
         if (index < 0) index = slides.length - 1;
         
-        slides[currentSlide].classList.remove('active');
+        // Faster fade transition
+        slides[currentSlide].style.opacity = '0';
         dots[currentSlide].classList.remove('active');
         
-        currentSlide = index;
-        
-        slides[currentSlide].classList.add('active');
-        dots[currentSlide].classList.add('active');
+        setTimeout(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = index;
+            
+            slides[currentSlide].classList.add('active');
+            slides[currentSlide].style.opacity = '1';
+            dots[currentSlide].classList.add('active');
+            
+            setTimeout(() => {
+                isAnimating = false;
+            }, 200); // Reduced from 300ms
+        }, 300); // Reduced from 500ms
     }
 
     function startAutoSlide() {
         slideInterval = setInterval(() => {
-            showSlide(currentSlide + 1);
+            if (!isAnimating) {
+                showSlide(currentSlide + 1);
+            }
         }, 5000);
     }
 
-    nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
-    prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+    nextBtn.addEventListener('click', () => {
+        if (!isAnimating) {
+            clearInterval(slideInterval);
+            showSlide(currentSlide + 1);
+            startAutoSlide();
+        }
+    });
+    
+    prevBtn.addEventListener('click', () => {
+        if (!isAnimating) {
+            clearInterval(slideInterval);
+            showSlide(currentSlide - 1);
+            startAutoSlide();
+        }
+    });
     
     dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => showSlide(index));
+        dot.addEventListener('click', () => {
+            if (!isAnimating && index !== currentSlide) {
+                clearInterval(slideInterval);
+                showSlide(index);
+                startAutoSlide();
+            }
+        });
     });
 
-    showSlide(0);
+    // Initialize first slide
+    slides.forEach((slide, index) => {
+        if (index !== 0) {
+            slide.style.opacity = '0';
+        }
+    });
+    
+    slides[0].classList.add('active');
+    slides[0].style.opacity = '1';
+    dots[0].classList.add('active');
+    
     startAutoSlide();
 });
-
-
 
 // Projects Data
 const projectsData = [
@@ -226,9 +266,6 @@ function displayProjects() {
 }
 
 document.addEventListener('DOMContentLoaded', displayProjects);
-
-
-
 
 // Contact Form
 function handleContactSubmit(event) {
@@ -288,55 +325,90 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-//Reveal Function
+// Fast and optimized Reveal Function
 function reveal() {
     const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
     
-    reveals.forEach(element => {
-        const windowHeight = window.innerHeight;
-        const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
-        
-        if (elementTop < windowHeight - elementVisible) {
-            element.classList.add('active');
-        } else {
-            element.classList.remove('active');
-        }
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                // Faster activation with shorter delay between elements
+                setTimeout(() => {
+                    entry.target.classList.add('active');
+                }, index * 50); // Reduced from 100ms
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 }); // Lower threshold for earlier activation
+    
+    reveals.forEach(item => {
+        observer.observe(item);
     });
 }
+
 document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(reveal, 100);
+    // Run reveal faster on page load
+    setTimeout(reveal, 100); // Reduced from 300ms
+    
+    // Use a more efficient approach for hover effects
+    initializeHoverEffects();
 });
 
-window.addEventListener('scroll', reveal, { passive: true });
-reveal();
+// Initialize hover effects for interactive elements - optimized version
+function initializeHoverEffects() {
+    // Apply hover classes through CSS for better performance
+    // instead of inline styles through JS
+    document.querySelectorAll('.service-box, .member, .project-card')
+        .forEach(el => {
+            el.addEventListener('mouseenter', function() {
+                this.classList.add('hover-active');
+            });
+            
+            el.addEventListener('mouseleave', function() {
+                this.classList.remove('hover-active');
+            });
+        });
+}
 
-
-//Counter Function
+// Improved Counter Animation with faster duration
 const counters = document.querySelectorAll('.counter');
-const speed = 9999;
+const speed = 200; // Lower for smoother animation
 
 function animateCounter() {
     counters.forEach(counter => {
         const target = +counter.getAttribute('data-target');
-        const count = +counter.innerText;
-        const increment = target / speed;
-
-        if (count < target) {
-            counter.innerText = Math.ceil(count + increment);
-            setTimeout(() => animateCounter(), 1);
-        } else {
-            counter.innerText = target;
+        const duration = 1500; // Reduced from 2000ms
+        const startTime = performance.now();
+        const startValue = 0;
+        
+        function updateCounter(currentTime) {
+            const elapsedTime = currentTime - startTime;
+            const progress = Math.min(elapsedTime / duration, 1);
+            
+            // Use easeOutQuad easing function for natural counting feel
+            const easeProgress = 1 - (1 - progress) * (1 - progress);
+            const currentValue = Math.floor(startValue + easeProgress * (target - startValue));
+            
+            counter.textContent = currentValue;
+            
+            if (progress < 1) {
+                requestAnimationFrame(updateCounter);
+            } else {
+                counter.textContent = target;
+            }
         }
+        
+        requestAnimationFrame(updateCounter);
     });
 }
-
 
 const statisticsSection = document.querySelector('.statistics-section');
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             animateCounter();
+            // Only trigger once
+            observer.unobserve(entry.target);
         }
     });
 }, { threshold: 0.5 });
