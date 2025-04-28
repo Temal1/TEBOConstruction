@@ -1,26 +1,18 @@
-// Performance optimization additions for main.js
-
-// Add this at the top of the file to prioritize interaction speed
 document.addEventListener('DOMContentLoaded', function() {
-    // Mark the navigation interaction as high priority
     if ('requestIdleCallback' in window) {
         requestIdleCallback(() => {
-            // Initialize non-critical features during idle time
             initLazyObservers();
             optimizeEventHandlers();
         });
     } else {
-        // Fallback for browsers without idle callback
         setTimeout(() => {
             initLazyObservers();
             optimizeEventHandlers();
         }, 200);
     }
     
-    // Handle preloader completion
     const preloader = document.querySelector('.preloader');
     if (preloader) {
-        // Complete loading faster if page is already loaded
         if (document.readyState === 'complete') {
             setTimeout(() => {
                 preloader.classList.add('fade-out');
@@ -34,10 +26,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Optimize image loading
 function initLazyObservers() {
     if ('IntersectionObserver' in window) {
-        // Lazy load non-critical images
         const imgObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -51,31 +41,23 @@ function initLazyObservers() {
             });
         }, { rootMargin: '200px 0px' });
         
-        // Find images with data-src attributes (if any)
         document.querySelectorAll('img[data-src]').forEach(img => {
             imgObserver.observe(img);
         });
     }
 }
 
-// Optimize event handlers to improve performance
 function optimizeEventHandlers() {
-    // Debounce scroll events for better performance
     let scrollTimeout;
     window.addEventListener('scroll', function() {
-        // Clear the timeout if a new scroll event is fired
         if (scrollTimeout) {
             window.cancelAnimationFrame(scrollTimeout);
         }
         
-        // Set a timeout to run after scrolling ends
         scrollTimeout = window.requestAnimationFrame(function() {
-            // Your existing scroll handlers remain the same
-            // This just ensures they don't run repeatedly during scroll
         });
     }, { passive: true });
     
-    // Use passive event listeners for touch events
     document.addEventListener('touchstart', function(){}, { passive: true });
     document.addEventListener('touchmove', function(){}, { passive: true });
 }
