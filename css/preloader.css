@@ -1,0 +1,340 @@
+:root {
+    --preloader-bg: #ffffff;
+    --preloader-accent: rgba(123, 197, 26, 0.8);
+    --preloader-dark: rgba(30, 41, 59, 0.8);
+    --preloader-text: #1E293B;
+}
+
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--preloader-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.4s ease-out, visibility 0.4s ease-out;
+    overflow: hidden;
+    will-change: opacity, visibility;
+}
+
+.preloader.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.preloader-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 500px;
+    padding: 0 20px;
+}
+
+/* Animated construction logo */
+.construction-animation {
+    position: relative;
+    width: 220px;
+    height: 180px;
+    margin-bottom: 40px;
+    will-change: transform;
+}
+
+.logo-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 160px;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-pulse {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(205, 233, 45, 0.2) 0%, rgba(205, 233, 45, 0) 70%);
+    animation: pulse 2s infinite cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+.logo-pulse:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.logo-pulse:nth-child(3) {
+    animation-delay: 0.8s;
+}
+
+.preloader-logo {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    z-index: 2;
+    animation: float 3s infinite ease-in-out;
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
+    will-change: transform;
+}
+
+/* Construction element animations - optimized */
+.construction-element {
+    position: absolute;
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+.beam {
+    width: 60px;
+    height: 10px;
+    background: var(--preloader-accent);
+    border-radius: 4px;
+}
+
+.beam-1 {
+    top: 20%;
+    left: 10%;
+    transform: rotate(-45deg);
+    animation: fadeInRotate 1.2s 0.2s forwards cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.beam-2 {
+    bottom: 20%;
+    right: 10%;
+    transform: rotate(45deg);
+    animation: fadeInRotate 1.2s 0.4s forwards cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.gear {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 4px solid var(--preloader-dark);
+    border-left-color: transparent;
+    top: 70%;
+    left: 15%;
+    animation: fadeInSpin 1.5s 0.3s forwards cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ruler {
+    width: 50px;
+    height: 10px;
+    background: var(--preloader-dark);
+    border-radius: 2px;
+    top: 20%;
+    right: 15%;
+    animation: fadeInScale 1.2s 0.5s forwards cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ruler::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 5px;
+    width: 2px;
+    height: 20px;
+    background: var(--preloader-dark);
+}
+
+.ruler::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 15px;
+    width: 2px;
+    height: 20px;
+    background: var(--preloader-dark);
+}
+
+/* Progress elements - optimized */
+.progress-container {
+    width: 250px;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) inset;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(to right, rgba(205, 233, 45, 0.8), rgba(123, 197, 26, 0.8));
+    border-radius: 3px;
+    transition: width 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    will-change: width;
+}
+
+.progress-glow {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.6), transparent);
+    animation: progressGlow 2s infinite linear;
+    will-change: transform;
+}
+
+.loading-text {
+    color: var(--preloader-text);
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transform: translateY(10px);
+    opacity: 0;
+    animation: fadeInUp 0.8s 0.3s forwards;
+}
+
+.dot-animation {
+    display: inline-flex;
+}
+
+.dot-animation span {
+    width: 4px;
+    height: 4px;
+    margin: 0 1px;
+    border-radius: 50%;
+    background-color: var(--preloader-text);
+    animation: dotPulse 1.5s infinite;
+    opacity: 0.7;
+}
+
+.dot-animation span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dot-animation span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.loading-status {
+    position: absolute;
+    bottom: 15%;
+    font-size: 13px;
+    color: var(--preloader-text);
+    opacity: 0.6;
+    text-align: center;
+    font-weight: 400;
+}
+
+/* Optimized animations */
+@keyframes pulse {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes fadeInRotate {
+    0% { opacity: 0; transform: rotate(0deg) scale(0.5); }
+    100% { opacity: 1; transform: rotate(var(--rotation)) scale(1); }
+}
+
+@keyframes fadeInSpin {
+    0% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+    100% { opacity: 0.8; transform: scale(1) rotate(360deg); }
+}
+
+@keyframes fadeInScale {
+    0% { opacity: 0; transform: scale(0.5); }
+    100% { opacity: 0.8; transform: scale(1); }
+}
+
+@keyframes progressGlow {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes dotPulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.5); opacity: 1; }
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+    .construction-animation {
+        width: 180px;
+        height: 140px;
+    }
+    
+    .logo-container {
+        width: 140px;
+        height: 140px;
+    }
+    
+    .preloader-logo {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .progress-container {
+        width: 220px;
+    }
+    
+    .beam {
+        width: 50px;
+        height: 8px;
+    }
+    
+    .gear {
+        width: 25px;
+        height: 25px;
+    }
+    
+    .ruler {
+        width: 40px;
+        height: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .construction-animation {
+        width: 150px;
+        height: 120px;
+    }
+    
+    .logo-container {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .preloader-logo {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .progress-container {
+        width: 200px;
+        height: 5px;
+    }
+}

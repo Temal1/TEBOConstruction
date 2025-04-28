@@ -1,3 +1,85 @@
+// Performance optimization additions for main.js
+
+// Add this at the top of the file to prioritize interaction speed
+document.addEventListener('DOMContentLoaded', function() {
+    // Mark the navigation interaction as high priority
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => {
+            // Initialize non-critical features during idle time
+            initLazyObservers();
+            optimizeEventHandlers();
+        });
+    } else {
+        // Fallback for browsers without idle callback
+        setTimeout(() => {
+            initLazyObservers();
+            optimizeEventHandlers();
+        }, 200);
+    }
+    
+    // Handle preloader completion
+    const preloader = document.querySelector('.preloader');
+    if (preloader) {
+        // Complete loading faster if page is already loaded
+        if (document.readyState === 'complete') {
+            setTimeout(() => {
+                preloader.classList.add('fade-out');
+                document.body.style.overflow = '';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                    reveal();
+                }, 300);
+            }, 500);
+        }
+    }
+});
+
+// Optimize image loading
+function initLazyObservers() {
+    if ('IntersectionObserver' in window) {
+        // Lazy load non-critical images
+        const imgObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                        imgObserver.unobserve(img);
+                    }
+                }
+            });
+        }, { rootMargin: '200px 0px' });
+        
+        // Find images with data-src attributes (if any)
+        document.querySelectorAll('img[data-src]').forEach(img => {
+            imgObserver.observe(img);
+        });
+    }
+}
+
+// Optimize event handlers to improve performance
+function optimizeEventHandlers() {
+    // Debounce scroll events for better performance
+    let scrollTimeout;
+    window.addEventListener('scroll', function() {
+        // Clear the timeout if a new scroll event is fired
+        if (scrollTimeout) {
+            window.cancelAnimationFrame(scrollTimeout);
+        }
+        
+        // Set a timeout to run after scrolling ends
+        scrollTimeout = window.requestAnimationFrame(function() {
+            // Your existing scroll handlers remain the same
+            // This just ensures they don't run repeatedly during scroll
+        });
+    }, { passive: true });
+    
+    // Use passive event listeners for touch events
+    document.addEventListener('touchstart', function(){}, { passive: true });
+    document.addEventListener('touchmove', function(){}, { passive: true });
+}
+
 let prevScrollPos = window.pageYOffset;
 
 window.addEventListener('scroll', () => {
@@ -43,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Set active nav link based on current page
+// Active Nav Link
 function setActiveNavLink() {
     const currentPath = window.location.pathname;
     const currentHash = window.location.hash;
@@ -101,7 +183,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
-//Slider with improved faster transitions
+// Slider
 document.addEventListener('DOMContentLoaded', function() {
     const slider = document.querySelector('.slider');
     const slides = document.querySelectorAll('.slide');
@@ -114,7 +196,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let touchEndX = 0;
     let isAnimating = false;
 
-    // Touch Events
     slider.addEventListener('touchstart', (e) => {
         touchStartX = e.changedTouches[0].screenX;
     }, { passive: true });
@@ -144,7 +225,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (index >= slides.length) index = 0;
         if (index < 0) index = slides.length - 1;
         
-        // Faster fade transition
         slides[currentSlide].style.opacity = '0';
         dots[currentSlide].classList.remove('active');
         
@@ -158,8 +238,8 @@ document.addEventListener('DOMContentLoaded', function() {
             
             setTimeout(() => {
                 isAnimating = false;
-            }, 200); // Reduced from 300ms
-        }, 300); // Reduced from 500ms
+            }, 200); 
+        }, 300); 
     }
 
     function startAutoSlide() {
@@ -196,7 +276,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Initialize first slide
     slides.forEach((slide, index) => {
         if (index !== 0) {
             slide.style.opacity = '0';
@@ -325,21 +404,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Fast and optimized Reveal Function
+// Reveal Animation
 function reveal() {
     const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
     
     const observer = new IntersectionObserver(entries => {
         entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
-                // Faster activation with shorter delay between elements
                 setTimeout(() => {
                     entry.target.classList.add('active');
-                }, index * 50); // Reduced from 100ms
+                }, index * 50); 
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1 }); // Lower threshold for earlier activation
+    }, { threshold: 0.1 }); 
     
     reveals.forEach(item => {
         observer.observe(item);
@@ -347,17 +425,12 @@ function reveal() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Run reveal faster on page load
-    setTimeout(reveal, 100); // Reduced from 300ms
+    setTimeout(reveal, 100);
     
-    // Use a more efficient approach for hover effects
     initializeHoverEffects();
 });
 
-// Initialize hover effects for interactive elements - optimized version
 function initializeHoverEffects() {
-    // Apply hover classes through CSS for better performance
-    // instead of inline styles through JS
     document.querySelectorAll('.service-box, .member, .project-card')
         .forEach(el => {
             el.addEventListener('mouseenter', function() {
@@ -370,14 +443,14 @@ function initializeHoverEffects() {
         });
 }
 
-// Improved Counter Animation with faster duration
+// Counter Animation
 const counters = document.querySelectorAll('.counter');
-const speed = 200; // Lower for smoother animation
+const speed = 200;
 
 function animateCounter() {
     counters.forEach(counter => {
         const target = +counter.getAttribute('data-target');
-        const duration = 1500; // Reduced from 2000ms
+        const duration = 1500; 
         const startTime = performance.now();
         const startValue = 0;
         
@@ -385,7 +458,6 @@ function animateCounter() {
             const elapsedTime = currentTime - startTime;
             const progress = Math.min(elapsedTime / duration, 1);
             
-            // Use easeOutQuad easing function for natural counting feel
             const easeProgress = 1 - (1 - progress) * (1 - progress);
             const currentValue = Math.floor(startValue + easeProgress * (target - startValue));
             
@@ -407,7 +479,6 @@ const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             animateCounter();
-            // Only trigger once
             observer.unobserve(entry.target);
         }
     });

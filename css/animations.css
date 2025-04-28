@@ -1,11 +1,7 @@
-/* Modern Animations for TEBO Construction */
-
-/* Page transitions */
 body {
     transition: opacity 0.3s ease-in-out;
 }
 
-/* Navbar transitions */
 .navbar {
     transition: transform 0.3s ease, 
                 background-color 0.3s ease,
@@ -18,9 +14,6 @@ body {
     will-change: width;
 }
 
-/* Performance-optimized animations */
-
-/* Use transform and opacity for better performance */
 .reveal {
     opacity: 0;
     transform: translateY(20px);
@@ -60,7 +53,6 @@ body {
     transform: translateX(0);
 }
 
-/* Service box hover animations */
 .service-box {
     transform: translateZ(0);
     backface-visibility: hidden;
@@ -73,7 +65,6 @@ body {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
-/* Project card animations */
 .project-card {
     transform: translateZ(0);
     backface-visibility: hidden;
@@ -98,7 +89,6 @@ body {
     transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-/* Team member animations */
 .member {
     transform: translateZ(0);
     backface-visibility: hidden;
@@ -126,7 +116,6 @@ body {
     transform: translateY(-5px) scale(1.1);
 }
 
-/* Button animations */
 .cta-button, 
 button[type="submit"] {
     transform: translateZ(0);
@@ -231,7 +220,6 @@ button[type="submit"]:hover {
     animation: pulse 1s infinite;
 }
 
-/* Shimmer effect for stat boxes */
 @keyframes shimmer {
     0% { background-position: 100% 0; }
     100% { background-position: -100% 0; }
