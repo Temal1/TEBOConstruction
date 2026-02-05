@@ -58,7 +58,7 @@
     </noscript>
     
     <link rel="preload" as="image" href="/images/logo.png">
-    <link rel="preload" as="image" href="/images/qualityconstruction.jpg">
+    <link rel="preload" as="image" href="/images/qualityconstruction.jpg" fetchpriority="high">
     
     <link rel="icon" type="image/x-icon" href="/images/logo.png">
     <meta name="description" content="TEBO Construction - Professional building and construction services with excellence and innovation">
@@ -102,35 +102,35 @@
         <div class="slider">
             <!-- Slides -->
             <div class="slide active">
-                <img src="/images/qualityconstruction.jpg" alt="Construction Site 1">
+                <img src="/images/qualityconstruction.jpg" alt="Construction Site 1" width="1920" height="1080" fetchpriority="high">
                 <div class="slide-content">
                     <h2>Quality Construction</h2>
                     <p>Building excellence into every project</p>
                 </div>
             </div>
             <div class="slide">
-                <img src="/images/moderndesign.jpg" alt="Construction Site 2">
+                <img src="/images/moderndesign.jpg" alt="Construction Site 2" width="1920" height="1080" loading="lazy">
                 <div class="slide-content">
                     <h2>Modern Design</h2>
                     <p>Innovative solutions for modern needs</p>
                 </div>
             </div>
             <div class="slide">
-                <img src="/images/expertteam.jpg" alt="Construction Site 3">
+                <img src="/images/expertteam.jpg" alt="Construction Site 3" width="1920" height="1080" loading="lazy">
                 <div class="slide-content">
                     <h2>Expert Team</h2>
                     <p>Professional builders at your service</p>
                 </div>
             </div>
             <div class="slide">
-                <img src="/images/safetyfirst.jpg" alt="Construction Site 4">
+                <img src="/images/safetyfirst.jpg" alt="Construction Site 4" width="1920" height="1080" loading="lazy">
                 <div class="slide-content">
                     <h2>Safety First</h2>
                     <p>Committed to workplace safety</p>
                 </div>
             </div>
             <div class="slide">
-                <img src="/images/sustainablebuilding.jpg" alt="Construction Site 5">
+                <img src="/images/sustainablebuilding.jpg" alt="Construction Site 5" width="1920" height="1080" loading="lazy">
                 <div class="slide-content">
                     <h2>Sustainable Building</h2>
                     <p>Eco-friendly construction practices</p>
@@ -152,7 +152,7 @@
 </section>
 
 <!-- Who We Are Section -->
-<section id="who-we-are" class="who-we-are reveal">
+<section id="who-we-are" class="who-we-are reveal" style="content-visibility:auto;contain-intrinsic-size:auto 600px">
     <div class="container">
         <h2 class="reveal">Who We Are?</h2>
         <div class="about-content">
@@ -167,14 +167,14 @@
                 </ul>
             </div>
             <div class="about-image reveal-right">
-                <img src="/images/expertteam.jpg" alt="Our Team">
+                <img src="/images/expertteam.jpg" alt="Our Team" loading="lazy" width="600" height="600">
             </div>
         </div>
     </div>
 </section>
 
 <!-- What We Do Section -->
-<section id="what-we-do" class="what-we-do reveal">
+<section id="what-we-do" class="what-we-do reveal" style="content-visibility:auto;contain-intrinsic-size:auto 500px">
     <div class="container">
         <h2 class="reveal">What We Do?</h2>
         <div class="services-content">
@@ -203,7 +203,7 @@
 </section>
 
 <!-- Projects Section -->
-<section id="projects" class="projects-section reveal">
+<section id="projects" class="projects-section reveal" style="content-visibility:auto;contain-intrinsic-size:auto 600px">
     <div class="container">
         <h2 class="reveal">Our Projects</h2>
         <div id="projects-grid" class="projects-grid"></div>
@@ -259,10 +259,10 @@
     </div>
     <div class="footer-bottom">
         <p>&copy; 2024 TEBO Construction. All rights reserved.</p>
+        <p class="made-by"><i class="bi bi-code-slash"></i> Made by <strong>TeboTronic</strong></p>
     </div>
 </footer>
 
 <script src="js/main.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" defer></script>
 </body>
 </html>

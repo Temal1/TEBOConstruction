@@ -1,32 +1,56 @@
-document.addEventListener('DOMContentLoaded', function() {
-    if ('requestIdleCallback' in window) {
-        requestIdleCallback(() => {
-            initLazyObservers();
-            optimizeEventHandlers();
-        });
-    } else {
-        setTimeout(() => {
-            initLazyObservers();
-            optimizeEventHandlers();
-        }, 200);
-    }
-    
-    const preloader = document.querySelector('.preloader');
-    if (preloader) {
-        if (document.readyState === 'complete') {
-            setTimeout(() => {
-                preloader.classList.add('fade-out');
-                document.body.style.overflow = '';
-                setTimeout(() => {
-                    preloader.style.display = 'none';
-                    reveal();
-                }, 300);
-            }, 500);
-        }
-    }
-});
+// Cache DOM references
+let cachedNavbar = null;
+let cachedHamburger = null;
+let cachedNavMenu = null;
+let cachedHomeLink = null;
+let cachedSections = null;
+let prevScrollPos = window.pageYOffset;
+let scrollTicking = false;
 
-function initLazyObservers() {
+function getNavbar() { return cachedNavbar || (cachedNavbar = document.querySelector('.navbar')); }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Cache DOM elements once
+    cachedNavbar = document.querySelector('.navbar');
+    cachedHamburger = document.querySelector('.hamburger');
+    cachedNavMenu = document.querySelector('.nav-menu');
+    cachedHomeLink = document.querySelector('.nav-link[data-page="home"]');
+    cachedSections = document.querySelectorAll('section[id]');
+
+    // Preloader handling
+    const preloader = document.querySelector('.preloader');
+    if (preloader && document.readyState === 'complete') {
+        setTimeout(() => {
+            preloader.classList.add('fade-out');
+            document.body.style.overflow = '';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+                reveal();
+            }, 300);
+        }, 500);
+    }
+
+    // Hamburger nav
+    if (cachedHamburger && cachedNavMenu) {
+        cachedHamburger.addEventListener('click', () => {
+            cachedHamburger.classList.toggle('active');
+            cachedNavMenu.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                cachedHamburger.classList.remove('active');
+                cachedNavMenu.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            });
+        });
+    }
+
+    // Set active nav link
+    setActiveNavLink();
+
+    // Lazy load images with data-src
     if ('IntersectionObserver' in window) {
         const imgObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -45,137 +69,102 @@ function initLazyObservers() {
             imgObserver.observe(img);
         });
     }
-}
+});
 
-function optimizeEventHandlers() {
-    let scrollTimeout;
-    window.addEventListener('scroll', function() {
-        if (scrollTimeout) {
-            window.cancelAnimationFrame(scrollTimeout);
+// Single consolidated scroll handler using rAF throttling
+window.addEventListener('scroll', () => {
+    if (scrollTicking) return;
+    scrollTicking = true;
+    
+    requestAnimationFrame(() => {
+        const navbar = getNavbar();
+        const currentScrollPos = window.pageYOffset;
+        
+        // Navbar show/hide on scroll
+        if (navbar) {
+            if (currentScrollPos > 100) {
+                navbar.style.transform = prevScrollPos > currentScrollPos ? "translateY(0)" : "translateY(-100%)";
+            } else {
+                navbar.style.transform = "translateY(0)";
+            }
+            
+            if (currentScrollPos > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         }
         
-        scrollTimeout = window.requestAnimationFrame(function() {
-        });
-    }, { passive: true });
-    
-    document.addEventListener('touchstart', function(){}, { passive: true });
-    document.addEventListener('touchmove', function(){}, { passive: true });
-}
-
-let prevScrollPos = window.pageYOffset;
-
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    const currentScrollPos = window.pageYOffset;
-    
-    if (currentScrollPos > 100) { 
-        if (prevScrollPos > currentScrollPos) {
-            navbar.style.transform = "translateY(0)";
-        } else {
-            navbar.style.transform = "translateY(-100%)";
+        // Active section highlighting
+        const isHomePage = window.location.pathname === '/' || window.location.pathname.includes('index.html');
+        if (isHomePage && cachedHomeLink && cachedSections) {
+            const scrollPosition = currentScrollPos + 100;
+            cachedHomeLink.classList.add('active');
+            
+            cachedSections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionId = section.getAttribute('id');
+                const sectionLink = document.querySelector(`.nav-link[href*="#${sectionId}"]`);
+                
+                if (sectionLink && sectionLink !== cachedHomeLink) {
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + section.offsetHeight) {
+                        sectionLink.classList.add('active');
+                    } else {
+                        sectionLink.classList.remove('active');
+                    }
+                }
+            });
         }
-    } else {
-        navbar.style.transform = "translateY(0)";
-    }
-    
-    if (currentScrollPos > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-    
-    prevScrollPos = currentScrollPos;
-});
-
-//Nav
-document.addEventListener('DOMContentLoaded', () => {
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
-    
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
-        document.body.classList.toggle('menu-open');
+        
+        prevScrollPos = currentScrollPos;
+        scrollTicking = false;
     });
-
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.classList.remove('menu-open');
-        });
-    });
-});
+}, { passive: true });
 
 // Active Nav Link
 function setActiveNavLink() {
     const currentPath = window.location.pathname;
     const currentHash = window.location.hash;
     const navLinks = document.querySelectorAll('.nav-link');
-    const homeLink = document.querySelector('.nav-link[data-page="home"]');
 
     navLinks.forEach(link => link.classList.remove('active'));
 
     const isHomePage = currentPath === '/' || currentPath.includes('index.html');
 
-    if (isHomePage) {
-        homeLink.classList.add('active');
+    if (isHomePage && cachedHomeLink) {
+        cachedHomeLink.classList.add('active');
         
         if (currentHash) {
             const sectionLink = document.querySelector(`.nav-link[href$="${currentHash}"]`);
-            if (sectionLink && sectionLink !== homeLink) {
+            if (sectionLink && sectionLink !== cachedHomeLink) {
                 sectionLink.classList.add('active');
             }
         }
     } else if (currentPath.includes('about.html')) {
-        document.querySelector('.nav-link[data-page="about"]').classList.add('active');
+        const aboutLink = document.querySelector('.nav-link[data-page="about"]');
+        if (aboutLink) aboutLink.classList.add('active');
     } else if (currentPath.includes('contact.html')) {
-        document.querySelector('.nav-link[data-page="contact"]').classList.add('active');
+        const contactLink = document.querySelector('.nav-link[data-page="contact"]');
+        if (contactLink) contactLink.classList.add('active');
     }
 }
 
-document.addEventListener('DOMContentLoaded', setActiveNavLink);
 window.addEventListener('hashchange', setActiveNavLink);
 
-window.addEventListener('scroll', () => {
-    if (window.location.pathname === '/' || window.location.pathname.includes('index.html')) {
-        const homeLink = document.querySelector('.nav-link[data-page="home"]');
-        const sections = document.querySelectorAll('section[id]');
-        const scrollPosition = window.pageYOffset + 100;
-
-        homeLink.classList.add('active');
-
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            const sectionId = section.getAttribute('id');
-            
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                const sectionLink = document.querySelector(`.nav-link[href*="#${sectionId}"]`);
-                if (sectionLink && sectionLink !== homeLink) {
-                    sectionLink.classList.add('active');
-                }
-            } else {
-                const sectionLink = document.querySelector(`.nav-link[href*="#${sectionId}"]`);
-                if (sectionLink && sectionLink !== homeLink) {
-                    sectionLink.classList.remove('active');
-                }
-            }
-        });
-    }
-});
-
 // Slider
-document.addEventListener('DOMContentLoaded', function() {
+(function initSlider() {
     const slider = document.querySelector('.slider');
+    if (!slider) return;
+    
     const slides = document.querySelectorAll('.slide');
     const dots = document.querySelectorAll('.dot');
     const nextBtn = document.querySelector('.next');
     const prevBtn = document.querySelector('.prev');
+    if (!slides.length || !dots.length || !nextBtn || !prevBtn) return;
+    
     let currentSlide = 0;
     let slideInterval;
     let touchStartX = 0;
-    let touchEndX = 0;
     let isAnimating = false;
 
     slider.addEventListener('touchstart', (e) => {
@@ -183,22 +172,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }, { passive: true });
 
     slider.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    }, { passive: true });
-
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        const diff = touchStartX - touchEndX;
-
-        if (Math.abs(diff) > swipeThreshold && !isAnimating) {
-            if (diff > 0) {
-                showSlide(currentSlide + 1);
-            } else {
-                showSlide(currentSlide - 1);
-            }
+        const diff = touchStartX - e.changedTouches[0].screenX;
+        if (Math.abs(diff) > 50 && !isAnimating) {
+            showSlide(currentSlide + (diff > 0 ? 1 : -1));
         }
-    }
+    }, { passive: true });
 
     function showSlide(index) {
         if (isAnimating) return;
@@ -269,7 +247,16 @@ document.addEventListener('DOMContentLoaded', function() {
     dots[0].classList.add('active');
     
     startAutoSlide();
-});
+
+    // Pause slider when tab is hidden
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            clearInterval(slideInterval);
+        } else {
+            startAutoSlide();
+        }
+    });
+})();
 
 // Projects Data
 const projectsData = [
@@ -303,16 +290,17 @@ function displayProjects() {
     const projectsGrid = document.getElementById('projects-grid');
     if (!projectsGrid) return;
     
-    projectsGrid.innerHTML = '';
+    const fragment = document.createDocumentFragment();
     
     projectsData.forEach(project => {
         const technologies = project.technologies.split(',').map(tech => 
             `<span>${tech.trim()}</span>`
         ).join('');
 
-        const projectCard = `
-            <div class="project-card">
-                <img src="${project.image}" alt="${project.title}">
+        const card = document.createElement('div');
+        card.className = 'project-card';
+        card.innerHTML = `
+                <img src="${project.image}" alt="${project.title}" loading="lazy" width="350" height="250">
                 <div class="project-info">
                     <h3>${project.title}</h3>
                     <p>${project.description}</p>
@@ -320,13 +308,17 @@ function displayProjects() {
                         ${technologies}
                     </div>
                 </div>
-            </div>
         `;
-        projectsGrid.innerHTML += projectCard;
+        fragment.appendChild(card);
     });
+    
+    projectsGrid.appendChild(fragment);
 }
 
-document.addEventListener('DOMContentLoaded', displayProjects);
+// Init projects from DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+    displayProjects();
+});
 
 // Contact Form
 function handleContactSubmit(event) {
@@ -379,16 +371,9 @@ function handleContactSubmit(event) {
     window.location.href = '../index.html';
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', handleContactSubmit);
-    }
-});
-
 // Reveal Animation
 function reveal() {
-    const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const reveals = document.querySelectorAll('.reveal:not(.active), .reveal-left:not(.active), .reveal-right:not(.active)');
     
     const observer = new IntersectionObserver(entries => {
         entries.forEach((entry, index) => {
@@ -406,11 +391,24 @@ function reveal() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(reveal, 100);
+// Single init for reveal + hover + contact form
+(function() {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPage);
+    } else {
+        initPage();
+    }
     
-    initializeHoverEffects();
-});
+    function initPage() {
+        setTimeout(reveal, 100);
+        initializeHoverEffects();
+        
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', handleContactSubmit);
+        }
+    }
+})();
 
 function initializeHoverEffects() {
     document.querySelectorAll('.service-box, .member, .project-card')

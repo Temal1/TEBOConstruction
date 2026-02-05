@@ -270,22 +270,6 @@ body.menu-open {
     @keyframes expandFromCenter {
         from {
             width: 0;
-            background: linear-gradient(to right, var(--primary), var(--primary-dark));
-        }
-        to {
-            width: 100%;
-            background: linear-gradient(to right, var(--primary), var(--primary-dark));
-        }
-    }
-
-    .nav-menu.active .nav-link::before {
-        width: 100%;
-        animation: expandFromCenter 1s ease-out forwards;
-    }
-
-    @keyframes expandFromCenter {
-        from {
-            width: 0;
         }
         to {
             width: 100%;
@@ -656,10 +640,9 @@ body.menu-open {
 }
 
 .service-icon {
-font-size: 3rem;
     font-size: 3rem;
     margin-bottom: 1.5rem;
-    }
+}
 
 .service-box h3 {
     color: var(--text);
@@ -983,10 +966,7 @@ font-size: 3rem;
     opacity: 0;
     transform: translateY(30px);
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform, opacity;
     backface-visibility: hidden;
-    perspective: 1000px;
-    transform-style: preserve-3d;
 }
 
 .reveal.active {
@@ -998,20 +978,14 @@ font-size: 3rem;
     opacity: 0;
     transform: translateX(-30px);
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform, opacity;
     backface-visibility: hidden;
-    perspective: 1000px;
-    transform-style: preserve-3d;
 }
 
 .reveal-right {
     opacity: 0;
     transform: translateX(30px);
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform, opacity;
     backface-visibility: hidden;
-    perspective: 1000px;
-    transform-style: preserve-3d;
 }
 
 .reveal-left.active,
@@ -1039,7 +1013,7 @@ font-size: 3rem;
     position: relative;
     min-height: 500px;
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80') center/cover no-repeat fixed;
+                url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1200') center/cover no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1302,6 +1276,23 @@ font-size: 3rem;
     font-size: 0.9rem;
 }
 
+.made-by {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: #9ca3af;
+    letter-spacing: 0.3px;
+}
+
+.made-by i {
+    color: var(--primary-dark);
+    margin-right: 2px;
+}
+
+.made-by strong {
+    color: #6b7280;
+    font-weight: 600;
+}
+
 @media (max-width: 768px) {
     .footer-content {
         flex-direction: column;
@@ -1378,7 +1369,7 @@ font-size: 3rem;
 .about-hero {
     height: 50vh;
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-                url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80') center/cover fixed;
+                url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1200') center/cover;
     display: flex;
     align-items: center;
     justify-content: center;

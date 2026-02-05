@@ -1,17 +1,11 @@
-body {
-    transition: opacity 0.3s ease-in-out;
-}
-
 .navbar {
     transition: transform 0.3s ease, 
                 background-color 0.3s ease,
                 backdrop-filter 0.3s ease;
-    will-change: transform, background-color;
 }
 
 .nav-link::before {
     transition: width 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    will-change: width;
 }
 
 .reveal {
@@ -19,7 +13,6 @@ body {
     transform: translateY(20px);
     transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
                 opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-    will-change: transform, opacity;
 }
 
 .reveal.active {
@@ -32,7 +25,6 @@ body {
     transform: translateX(-20px);
     transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
                 opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-    will-change: transform, opacity;
 }
 
 .reveal-left.active {
@@ -45,7 +37,6 @@ body {
     transform: translateX(20px);
     transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
                 opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-    will-change: transform, opacity;
 }
 
 .reveal-right.active {
@@ -54,9 +45,6 @@ body {
 }
 
 .service-box {
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    perspective: 1000px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -66,9 +54,6 @@ body {
 }
 
 .project-card {
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    perspective: 1000px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -90,9 +75,6 @@ body {
 }
 
 .member {
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    perspective: 1000px;
     transition: transform 0.3s ease;
 }
 
@@ -118,9 +100,6 @@ body {
 
 .cta-button, 
 button[type="submit"] {
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    perspective: 1000px;
     position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
@@ -161,18 +140,11 @@ button[type="submit"]:hover {
 }
 
 .slider-btn {
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    perspective: 1000px;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .dot {
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    perspective: 1000px;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    will-change: width, transform;
 }
 
 /* Counter animations */
@@ -182,9 +154,6 @@ button[type="submit"]:hover {
 
 /* Footer animations */
 .social-link {
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    perspective: 1000px;
     transition: transform 0.3s ease;
 }
 
@@ -194,14 +163,12 @@ button[type="submit"]:hover {
 
 .footer-links a::after {
     transition: width 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-    will-change: width;
 }
 
 /* Form field animations */
 .form-group input,
 .form-group textarea {
     transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-    will-change: border-color, box-shadow;
 }
 
 /* Custom loading animation */

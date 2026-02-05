@@ -1,22 +1,7 @@
 (function() {
-    const criticalResources = [
-        { type: 'image', href: '/images/logo.png' },
-        { type: 'style', href: '/css/style.css' }
-    ];
-    
-    criticalResources.forEach(resource => {
-        if (resource.type === 'image') {
-            const img = new Image();
-            img.src = resource.href;
-        } else if (resource.type === 'style') {
-            const link = document.createElement('link');
-            link.rel = 'preload';
-            link.as = 'style';
-            link.href = resource.href;
-            link.onload = function() { this.rel = 'stylesheet'; };
-            document.head.appendChild(link);
-        }
-    });
+    // Skip redundant preload of style.css - it's already in <head>
+    const logoImg = new Image();
+    logoImg.src = '/images/logo.png';
     
     let progressValue = 0;
     let loadingComplete = false;
@@ -47,8 +32,9 @@
                 loadingComplete = true;
             }
             
-            if (progressBar) progressBar.style.width = `${Math.floor(progressValue)}%`;
-            if (loadingTextPercentage) loadingTextPercentage.textContent = `${Math.floor(progressValue)}%`;
+            const floored = Math.floor(progressValue);
+            if (progressBar) progressBar.style.width = floored + '%';
+            if (loadingTextPercentage) loadingTextPercentage.textContent = floored + '%';
             
             if (loadingStatus) {
                 const messageIndex = Math.min(Math.floor(progressValue / 40), messages.length - 1);
@@ -63,13 +49,12 @@
         }
         
         function completeLoading() {
-            preloader.style.transition = 'opacity 0.3s ease-out, visibility 0.3s ease-out';
             preloader.classList.add('fade-out');
-            
             document.body.style.overflow = '';
             
             setTimeout(() => {
                 preloader.style.display = 'none';
+                preloader.remove(); // Remove from DOM entirely
                 if (typeof reveal === 'function') {
                     reveal();
                 }
@@ -83,14 +68,16 @@
             
             setTimeout(() => {
                 loadingComplete = true;
-            }, 1000);
+            }, 800);
         });
         
+        // Failsafe: ensure preloader always clears
         setTimeout(() => {
             loadingComplete = true;
         }, 2500);
     });
     
+    // Prefetch secondary resources during idle time
     function prefetchSecondaryResources() {
         if ('requestIdleCallback' in window) {
             requestIdleCallback(() => {
