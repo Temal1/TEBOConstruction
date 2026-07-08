@@ -1,4 +1,3 @@
-// Cache DOM references
 let cachedNavbar = null;
 let cachedHamburger = null;
 let cachedNavMenu = null;
@@ -10,14 +9,12 @@ let scrollTicking = false;
 function getNavbar() { return cachedNavbar || (cachedNavbar = document.querySelector('.navbar')); }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Cache DOM elements once
     cachedNavbar = document.querySelector('.navbar');
     cachedHamburger = document.querySelector('.hamburger');
     cachedNavMenu = document.querySelector('.nav-menu');
     cachedHomeLink = document.querySelector('.nav-link[data-page="home"]');
     cachedSections = document.querySelectorAll('section[id]');
 
-    // Preloader handling
     const preloader = document.querySelector('.preloader');
     if (preloader && document.readyState === 'complete') {
         setTimeout(() => {
@@ -30,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 500);
     }
 
-    // Hamburger nav (click + keyboard)
     if (cachedHamburger && cachedNavMenu) {
         const toggleMenu = () => {
             cachedHamburger.classList.toggle('active');
@@ -55,10 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Set active nav link
     setActiveNavLink();
 
-    // Lazy load images with data-src
     if ('IntersectionObserver' in window) {
         const imgObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -79,7 +73,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Single consolidated scroll handler using rAF throttling
 window.addEventListener('scroll', () => {
     if (scrollTicking) return;
     scrollTicking = true;
@@ -88,7 +81,6 @@ window.addEventListener('scroll', () => {
         const navbar = getNavbar();
         const currentScrollPos = window.pageYOffset;
 
-        // Navbar show/hide on scroll (with a small threshold to avoid flicker)
         if (navbar) {
             const delta = currentScrollPos - prevScrollPos;
             if (currentScrollPos <= 100) {
@@ -104,7 +96,6 @@ window.addEventListener('scroll', () => {
             }
         }
 
-        // Active section highlighting
         const isHomePage = window.location.pathname === '/' || window.location.pathname.includes('index.html');
         if (isHomePage && cachedHomeLink && cachedSections) {
             const scrollPosition = currentScrollPos + 100;
@@ -130,7 +121,6 @@ window.addEventListener('scroll', () => {
     });
 }, { passive: true });
 
-// Active Nav Link
 function setActiveNavLink() {
     const currentPath = window.location.pathname;
     const currentHash = window.location.hash;
@@ -263,7 +253,6 @@ window.addEventListener('hashchange', setActiveNavLink);
 
     startAutoSlide();
 
-    // Pause slider when tab is hidden
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
             clearInterval(slideInterval);
@@ -337,7 +326,6 @@ function displayProjects() {
     projectsGrid.appendChild(fragment);
 }
 
-// Init projects from DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
     displayProjects();
 });
@@ -400,7 +388,6 @@ function handleContactSubmit(event) {
         messages.push(message);
         localStorage.setItem('messages', JSON.stringify(messages));
     } catch (e) {
-        // Storage unavailable (private mode / quota) — still confirm to the user
     }
 
     form.reset();
@@ -413,8 +400,6 @@ function handleContactSubmit(event) {
     }
 }
 
-// Reveal Animation — activates just before elements enter the viewport
-// so scrolling never waits on queued timeouts (stagger is handled by CSS delays)
 function reveal() {
     const reveals = document.querySelectorAll('.reveal:not(.active), .reveal-left:not(.active), .reveal-right:not(.active)');
 
@@ -437,7 +422,6 @@ function reveal() {
     });
 }
 
-// Single init for reveal + hover + contact form
 (function() {
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initPage);
@@ -469,7 +453,6 @@ function initializeHoverEffects() {
         });
 }
 
-// Counter Animation — works anywhere counters appear (home stats band + about page)
 (function initCounters() {
     const counters = document.querySelectorAll('.counter');
     if (!counters.length || !('IntersectionObserver' in window)) return;

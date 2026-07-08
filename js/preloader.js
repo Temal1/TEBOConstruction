@@ -1,5 +1,4 @@
 (function() {
-    // Skip redundant preload of style.css - it's already in <head>
     const logoImg = new Image();
     logoImg.src = '/images/logo.png';
     
@@ -55,10 +54,9 @@
             preloader.classList.add('fade-out');
             document.body.style.overflow = '';
 
-            // Matches the 0.6s fade-out transition in preloader.css
             setTimeout(() => {
                 preloader.style.display = 'none';
-                preloader.remove(); // Remove from DOM entirely
+                preloader.remove(); 
                 if (typeof reveal === 'function') {
                     reveal();
                 }
@@ -75,13 +73,11 @@
             }, 800);
         });
         
-        // Failsafe: ensure preloader always clears
         setTimeout(() => {
             loadingComplete = true;
         }, 2500);
     });
     
-    // Prefetch secondary resources during idle time
     function prefetchSecondaryResources() {
         if ('requestIdleCallback' in window) {
             requestIdleCallback(() => {

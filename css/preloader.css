@@ -1,7 +1,3 @@
-/* ============================================================
-   TEBO Construction — Premium Preloader
-   ============================================================ */
-
 :root {
     --preloader-bg: #0b1220;
     --preloader-accent: #7bc51a;
@@ -45,7 +41,6 @@
     transform: scale(1.06);
 }
 
-/* Logo with rotating ring + breathing aura */
 .logo-container {
     position: relative;
     width: 170px;

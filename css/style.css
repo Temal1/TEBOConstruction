@@ -1,15 +1,9 @@
-/* ============================================================
-   TEBO Construction — Premium Design System
-   ============================================================ */
-
 :root {
-    /* Brand — one green family, no yellow drift */
     --accent: #7bc51a;
     --accent-2: #9fdd33;
     --accent-deep: #588f12;
     --grad: linear-gradient(120deg, var(--accent-2) 0%, var(--accent) 100%);
 
-    /* Neutrals */
     --ink: #0b1220;
     --ink-soft: #111a2e;
     --text: #1e293b;
@@ -19,11 +13,9 @@
     --surface-2: #f5f8f0;
     --surface-3: #ebf4dd;
 
-    /* Typography */
     --font-display: 'Archivo', 'Segoe UI', Arial, sans-serif;
     --font-body: 'Inter', 'Segoe UI', Arial, sans-serif;
 
-    /* Shape & depth */
     --radius: 20px;
     --radius-sm: 12px;
     --shadow-sm: 0 2px 8px rgba(11, 18, 32, 0.06);
@@ -33,7 +25,6 @@
 
     --transition-bezier: cubic-bezier(0.165, 0.84, 0.44, 1);
 
-    /* Kept for legacy rules */
     --primary: var(--accent-2);
     --primary-dark: var(--accent);
 }
@@ -82,7 +73,6 @@ img {
     color: #fff;
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar { width: 11px; }
 ::-webkit-scrollbar-track { background: var(--surface-2); }
 ::-webkit-scrollbar-thumb {
@@ -182,9 +172,7 @@ img {
 
 .btn i { font-size: 1.05em; }
 
-/* ============================================================
-   Navigation
-   ============================================================ */
+
 .navbar {
     position: fixed;
     top: 0;
@@ -359,9 +347,6 @@ img {
     .about-hero-page .nav-menu .nav-link { color: #fff !important; }
 }
 
-/* ============================================================
-   Hero Slider
-   ============================================================ */
 .hero { position: relative; }
 
 .slider-container {
@@ -602,9 +587,7 @@ img {
     .slider:active { cursor: grabbing; }
 }
 
-/* ============================================================
-   Stats band
-   ============================================================ */
+
 .stats-band {
     background: var(--ink);
     position: relative;
@@ -681,9 +664,7 @@ img {
     .stats-band { padding: 3.5rem 1.2rem; }
 }
 
-/* ============================================================
-   Who We Are
-   ============================================================ */
+
 .who-we-are {
     padding: 7rem 2rem;
     background: var(--surface);
@@ -837,9 +818,7 @@ img {
     .experience-badge .num { font-size: 2rem; }
 }
 
-/* ============================================================
-   Services
-   ============================================================ */
+
 .what-we-do {
     padding: 7rem 2rem;
     background: var(--surface-2);
@@ -926,9 +905,7 @@ img {
     .what-we-do { padding: 5rem 1.2rem; }
 }
 
-/* ============================================================
-   Projects
-   ============================================================ */
+
 .projects-section {
     padding: 7rem 2rem;
     background: var(--surface);
@@ -1055,9 +1032,7 @@ img {
     .projects-section { padding: 5rem 1.2rem; }
 }
 
-/* ============================================================
-   Testimonials
-   ============================================================ */
+
 .testimonials {
     padding: 7rem 2rem;
     background: var(--surface-2);
@@ -1155,9 +1130,7 @@ img {
     .testimonials { padding: 5rem 1.2rem; }
 }
 
-/* ============================================================
-   Work With Us (CTA)
-   ============================================================ */
+
 .work-with-us {
     position: relative;
     min-height: 480px;
@@ -1228,9 +1201,7 @@ img {
     box-shadow: 0 18px 40px rgba(123, 197, 26, 0.45);
 }
 
-/* ============================================================
-   Footer
-   ============================================================ */
+
 .footer {
     background: var(--ink);
     color: rgba(255, 255, 255, 0.7);
@@ -1434,9 +1405,7 @@ img {
     .social-links { justify-content: center; }
 }
 
-/* ============================================================
-   Scroll reveal
-   ============================================================ */
+
 .reveal {
     opacity: 0;
     transform: translateY(20px);
@@ -1464,9 +1433,7 @@ img {
 .delay-2 { transition-delay: 0.16s; }
 .delay-3 { transition-delay: 0.24s; }
 
-/* ============================================================
-   About page
-   ============================================================ */
+
 .about-hero {
     height: 62vh;
     min-height: 440px;
@@ -1889,9 +1856,7 @@ img {
     .about.section { padding: 4rem 1.2rem; }
 }
 
-/* ============================================================
-   Accessibility
-   ============================================================ */
+
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
