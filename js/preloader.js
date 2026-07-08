@@ -49,16 +49,20 @@
         }
         
         function completeLoading() {
+            if (progressBar) progressBar.style.width = '100%';
+            if (loadingTextPercentage) loadingTextPercentage.textContent = '100%';
+
             preloader.classList.add('fade-out');
             document.body.style.overflow = '';
-            
+
+            // Matches the 0.6s fade-out transition in preloader.css
             setTimeout(() => {
                 preloader.style.display = 'none';
                 preloader.remove(); // Remove from DOM entirely
                 if (typeof reveal === 'function') {
                     reveal();
                 }
-            }, 300);
+            }, 650);
         }
         
         requestAnimationFrame(updateProgress);

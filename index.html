@@ -3,35 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TEBOConstruction</title>
-    
+    <title>TEBO Construction - Building Excellence</title>
+
     <style>
-        .preloader{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999}
+        .preloader{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#0b1220;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999}
         .preloader-content{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;max-width:500px;padding:0 20px}
-        .logo-container{position:relative;width:160px;height:160px;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
-        .preloader-logo{width:100px;height:100px;object-fit:contain;z-index:2}
-        .progress-container{width:250px;height:6px;background:rgba(0,0,0,.05);border-radius:3px;overflow:hidden;margin-bottom:20px}
-        .progress-bar{height:100%;width:0%;background:linear-gradient(to right,rgba(205,233,45,.8),rgba(123,197,26,.8));border-radius:3px}
-        body{margin:0;padding:0;font-family:Arial,sans-serif}
+        .logo-container{position:relative;width:170px;height:170px;display:flex;align-items:center;justify-content:center;margin-bottom:34px}
+        .preloader-logo{width:96px;height:96px;object-fit:contain;z-index:2;filter:brightness(0) invert(1)}
+        .progress-container{width:210px;height:3px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;margin-bottom:20px}
+        .progress-bar{height:100%;width:0%;background:linear-gradient(to right,#9fdd33,#7bc51a);border-radius:3px}
+        body{margin:0;padding:0;font-family:Arial,sans-serif;background:#0b1220}
     </style>
-    
+
     <!-- Preloader -->
     <script>
         (function() {
             let progressValue = 0;
-            
+
             function updateProgress() {
                 progressValue += (100 - progressValue) * 0.1;
                 const bar = document.querySelector('.progress-bar');
                 if (bar) bar.style.width = Math.min(progressValue, 100) + '%';
-                
+
                 if (progressValue < 99) requestAnimationFrame(updateProgress);
             }
-            
+
             document.addEventListener('DOMContentLoaded', function() {
                 requestAnimationFrame(updateProgress);
             });
-            
+
             setTimeout(function() {
                 const bar = document.querySelector('.progress-bar');
                 if (bar && parseInt(bar.style.width) === 0) {
@@ -40,229 +40,360 @@
             }, 100);
         })();
     </script>
-    
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="css/preloader.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animations.css" media="print" onload="this.media='all'">
-    
+
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     </noscript>
-    
+
     <link rel="preload" as="image" href="/images/logo.png">
     <link rel="preload" as="image" href="/images/qualityconstruction.jpg" fetchpriority="high">
-    
+
     <link rel="icon" type="image/x-icon" href="/images/logo.png">
-    <meta name="description" content="TEBO Construction - Professional building and construction services with excellence and innovation">
-    
+    <meta name="description" content="TEBO Construction - Premium building and construction services in Kosovo. Over 20 years of excellence in residential, commercial and industrial projects.">
+    <meta property="og:title" content="TEBO Construction - Building Excellence">
+    <meta property="og:description" content="Premium building and construction services. Over 20 years of excellence in residential, commercial and industrial projects.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="/images/qualityconstruction.jpg">
+    <meta name="theme-color" content="#0b1220">
+
     <script src="js/preloader.js" defer></script>
 </head>
 <body class="about-hero-page">
     <div class="preloader">
         <div class="preloader-content">
             <div class="logo-container">
+                <span class="logo-aura"></span>
+                <span class="logo-ring"></span>
                 <img src="/images/logo.png" alt="TEBO Logo" class="preloader-logo">
             </div>
             <div class="progress-container">
-                <div class="progress-bar"></div>
+                <div class="progress-bar"><span class="progress-glow"></span></div>
+            </div>
+            <div class="loading-text">
+                <span class="loading-text-percentage">0%</span>
+                <span class="loading-label">Loading</span>
             </div>
         </div>
     </div>
-    
+
     <!-- Navigation -->
-<nav class="navbar reveal">
-    <div class="nav-brand">
-        <img src="images/logo.png" alt="TEBO Logo" class="nav-logo">
-    </div>
-    <div class="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-    <ul class="nav-menu">
-        <li><a href="index.html" class="nav-link" data-page="home">Home</a></li>
-        <li><a href="/views/about.html" class="nav-link" data-page="about">About Us</a></li>
-        <li><a href="/index.html#what-we-do" class="nav-link" data-page="services">Services</a></li>
-        <li><a href="/index.html#projects" class="nav-link" data-page="projects">Projects</a></li>
-        <li><a href="/views/contact.html" class="nav-link" data-page="contact">Contact</a></li>
-    </ul>
-</nav>
+    <nav class="navbar reveal">
+        <div class="nav-brand">
+            <a href="index.html" aria-label="TEBO Construction home">
+                <img src="images/logo.png" alt="TEBO Logo" class="nav-logo">
+            </a>
+        </div>
+        <div class="hamburger" role="button" aria-label="Toggle navigation" tabindex="0">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="index.html" class="nav-link" data-page="home">Home</a></li>
+            <li><a href="/views/about.html" class="nav-link" data-page="about">About Us</a></li>
+            <li><a href="/index.html#what-we-do" class="nav-link" data-page="services">Services</a></li>
+            <li><a href="/index.html#projects" class="nav-link" data-page="projects">Projects</a></li>
+            <li><a href="/views/contact.html" class="nav-link" data-page="contact">Contact</a></li>
+        </ul>
+    </nav>
 
-    <!-- Slider Section -->
-<section id="home" class="hero reveal">
-    <div class="slider-container reveal">
-        <div class="slider">
-            <!-- Slides -->
-            <div class="slide active">
-                <img src="/images/qualityconstruction.jpg" alt="Construction Site 1" width="1920" height="1080" fetchpriority="high">
-                <div class="slide-content">
-                    <h2>Quality Construction</h2>
-                    <p>Building excellence into every project</p>
+    <!-- Hero Slider -->
+    <section id="home" class="hero">
+        <div class="slider-container">
+            <div class="slider">
+                <div class="slide active">
+                    <img src="/images/qualityconstruction.jpg" alt="Quality construction site" width="1920" height="1080" fetchpriority="high">
+                    <div class="slide-content">
+                        <span class="slide-eyebrow">TEBO Construction</span>
+                        <h2>Quality Construction</h2>
+                        <p>Building excellence into every project - from foundation to finish, we deliver craftsmanship that endures.</p>
+                        <div class="hero-actions">
+                            <a href="/views/contact.html" class="btn btn-primary"><i class="bi bi-chat-dots"></i> Get a Free Quote</a>
+                            <a href="#projects" class="btn btn-ghost"><i class="bi bi-building"></i> View Our Work</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="/images/moderndesign.jpg" alt="Modern architectural design" width="1920" height="1080" loading="lazy">
+                    <div class="slide-content">
+                        <span class="slide-eyebrow">Design &amp; Innovation</span>
+                        <h2>Modern Design</h2>
+                        <p>Innovative solutions for modern needs - architecture that inspires and spaces that perform.</p>
+                        <div class="hero-actions">
+                            <a href="/views/contact.html" class="btn btn-primary"><i class="bi bi-chat-dots"></i> Get a Free Quote</a>
+                            <a href="#projects" class="btn btn-ghost"><i class="bi bi-building"></i> View Our Work</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="/images/expertteam.jpg" alt="Expert construction team" width="1920" height="1080" loading="lazy">
+                    <div class="slide-content">
+                        <span class="slide-eyebrow">Our People</span>
+                        <h2>Expert Team</h2>
+                        <p>Professional builders at your service - decades of combined experience on every job site.</p>
+                        <div class="hero-actions">
+                            <a href="/views/contact.html" class="btn btn-primary"><i class="bi bi-chat-dots"></i> Get a Free Quote</a>
+                            <a href="/views/about.html" class="btn btn-ghost"><i class="bi bi-people"></i> Meet the Team</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="/images/safetyfirst.jpg" alt="Construction safety practices" width="1920" height="1080" loading="lazy">
+                    <div class="slide-content">
+                        <span class="slide-eyebrow">Zero Compromise</span>
+                        <h2>Safety First</h2>
+                        <p>Committed to workplace safety - certified processes protecting our people and your project.</p>
+                        <div class="hero-actions">
+                            <a href="/views/contact.html" class="btn btn-primary"><i class="bi bi-chat-dots"></i> Get a Free Quote</a>
+                            <a href="#what-we-do" class="btn btn-ghost"><i class="bi bi-tools"></i> Our Services</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="/images/sustainablebuilding.jpg" alt="Sustainable building practices" width="1920" height="1080" loading="lazy">
+                    <div class="slide-content">
+                        <span class="slide-eyebrow">Green Building</span>
+                        <h2>Sustainable Building</h2>
+                        <p>Eco-friendly construction practices - building a better tomorrow with responsible materials and methods.</p>
+                        <div class="hero-actions">
+                            <a href="/views/contact.html" class="btn btn-primary"><i class="bi bi-chat-dots"></i> Get a Free Quote</a>
+                            <a href="#projects" class="btn btn-ghost"><i class="bi bi-building"></i> View Our Work</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="slide">
-                <img src="/images/moderndesign.jpg" alt="Construction Site 2" width="1920" height="1080" loading="lazy">
-                <div class="slide-content">
-                    <h2>Modern Design</h2>
-                    <p>Innovative solutions for modern needs</p>
-                </div>
+
+            <button class="slider-btn prev" aria-label="Previous slide"><i class="bi bi-chevron-left"></i></button>
+            <button class="slider-btn next" aria-label="Next slide"><i class="bi bi-chevron-right"></i></button>
+
+            <div class="dots-container">
+                <span class="dot active" role="button" aria-label="Go to slide 1"></span>
+                <span class="dot" role="button" aria-label="Go to slide 2"></span>
+                <span class="dot" role="button" aria-label="Go to slide 3"></span>
+                <span class="dot" role="button" aria-label="Go to slide 4"></span>
+                <span class="dot" role="button" aria-label="Go to slide 5"></span>
             </div>
-            <div class="slide">
-                <img src="/images/expertteam.jpg" alt="Construction Site 3" width="1920" height="1080" loading="lazy">
-                <div class="slide-content">
-                    <h2>Expert Team</h2>
-                    <p>Professional builders at your service</p>
-                </div>
+
+            <a href="#stats" class="scroll-hint">Scroll</a>
+        </div>
+    </section>
+
+    <!-- Stats Band -->
+    <section id="stats" class="stats-band reveal">
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-value"><span class="counter" data-target="20">0</span><span class="suffix">+</span></div>
+                <div class="stat-label">Years of Excellence</div>
             </div>
-            <div class="slide">
-                <img src="/images/safetyfirst.jpg" alt="Construction Site 4" width="1920" height="1080" loading="lazy">
-                <div class="slide-content">
-                    <h2>Safety First</h2>
-                    <p>Committed to workplace safety</p>
-                </div>
+            <div class="stat-item">
+                <div class="stat-value"><span class="counter" data-target="500">0</span><span class="suffix">+</span></div>
+                <div class="stat-label">Projects Completed</div>
             </div>
-            <div class="slide">
-                <img src="/images/sustainablebuilding.jpg" alt="Construction Site 5" width="1920" height="1080" loading="lazy">
-                <div class="slide-content">
-                    <h2>Sustainable Building</h2>
-                    <p>Eco-friendly construction practices</p>
+            <div class="stat-item">
+                <div class="stat-value"><span class="counter" data-target="150">0</span><span class="suffix">+</span></div>
+                <div class="stat-label">Happy Clients</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value"><span class="counter" data-target="100">0</span><span class="suffix">%</span></div>
+                <div class="stat-label">Client Satisfaction</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who We Are Section -->
+    <section id="who-we-are" class="who-we-are">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text reveal-left">
+                    <span class="eyebrow">Who We Are</span>
+                    <h2>Building More Than Structures - <em>Building Trust</em></h2>
+                    <p>With over two decades of experience in the construction industry, TEBO Construction has established itself as a leader in delivering exceptional building solutions. Our commitment to quality, innovation, and customer satisfaction sets us apart.</p>
+                    <p>Our team of skilled professionals brings expertise, dedication, and creativity to every project, ensuring we exceed expectations and deliver results that stand the test of time.</p>
+                    <ul class="achievements">
+                        <li><i class="bi bi-award"></i> 20+ Years of Excellence</li>
+                        <li><i class="bi bi-buildings"></i> 500+ Projects Completed</li>
+                        <li><i class="bi bi-trophy"></i> Award-Winning Team</li>
+                        <li><i class="bi bi-heart"></i> 100% Client Satisfaction</li>
+                    </ul>
+                    <div class="about-cta">
+                        <a href="/views/about.html" class="btn btn-primary"><i class="bi bi-arrow-right-circle"></i> Discover Our Story</a>
+                    </div>
+                </div>
+                <div class="about-image reveal-right">
+                    <img src="/images/expertteam.jpg" alt="Our Team" loading="lazy" width="600" height="600">
+                    <div class="experience-badge">
+                        <span class="num">20+</span>
+                        <span class="label">Years of proven experience</span>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <button class="slider-btn prev">❮</button>
-        <button class="slider-btn next">❯</button>
-        
-        <div class="dots-container">
-            <span class="dot active"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-        </div>
-    </div>
-</section>
+    </section>
 
-<!-- Who We Are Section -->
-<section id="who-we-are" class="who-we-are reveal" style="content-visibility:auto;contain-intrinsic-size:auto 600px">
-    <div class="container">
-        <h2 class="reveal">Who We Are?</h2>
-        <div class="about-content">
-            <div class="about-text reveal-left">
-                <p>With over two decades of experience in the construction industry, TEBO Construction has established itself as a leader in delivering exceptional building solutions. Our commitment to quality, innovation, and customer satisfaction sets us apart in the industry.</p>
-                <p>We believe in building not just structures, but lasting relationships with our clients. Our team of skilled professionals brings expertise, dedication, and creativity to every project, ensuring that we exceed expectations and deliver results that stand the test of time.</p>
-                <ul class="achievements">
-                    <li>✓ 20+ Years of Excellence</li>
-                    <li>✓ 500+ Projects Completed</li>
-                    <li>✓ Award-Winning Team</li>
-                    <li>✓ 100% Client Satisfaction</li>
+    <!-- What We Do Section -->
+    <section id="what-we-do" class="what-we-do">
+        <div class="container">
+            <div class="section-head reveal">
+                <span class="eyebrow">What We Do</span>
+                <h2>Complete Construction Services</h2>
+                <p>From first sketch to final handover, we cover every stage of your project with precision and care.</p>
+            </div>
+            <div class="services-content">
+                <div class="service-box reveal">
+                    <div class="service-icon"><i class="bi bi-bounding-box-circles"></i></div>
+                    <h3>Construction Management</h3>
+                    <p>Professional oversight of construction projects from planning to completion, ensuring quality and efficiency at every milestone.</p>
+                </div>
+                <div class="service-box reveal delay-1">
+                    <div class="service-icon"><i class="bi bi-buildings"></i></div>
+                    <h3>Building Development</h3>
+                    <p>Comprehensive building solutions for residential, commercial, and industrial projects of any scale.</p>
+                </div>
+                <div class="service-box reveal delay-2">
+                    <div class="service-icon"><i class="bi bi-tools"></i></div>
+                    <h3>Renovation Services</h3>
+                    <p>Expert renovation and remodeling services to transform existing structures into modern, functional spaces.</p>
+                </div>
+                <div class="service-box reveal delay-3">
+                    <div class="service-icon"><i class="bi bi-clipboard-data"></i></div>
+                    <h3>Project Planning</h3>
+                    <p>Detailed project planning and consulting services to ensure successful, on-time and on-budget execution.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <div class="container">
+            <div class="section-head reveal">
+                <span class="eyebrow">Portfolio</span>
+                <h2>Our Featured Projects</h2>
+                <p>A selection of work that reflects our standards - precision, durability and design excellence.</p>
+            </div>
+            <div id="projects-grid" class="projects-grid"></div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-head reveal">
+                <span class="eyebrow">Testimonials</span>
+                <h2>What Our Clients Say</h2>
+                <p>Trust is earned one project at a time. Here is what our partners say about working with us.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card reveal">
+                    <span class="quote-mark">&ldquo;</span>
+                    <div class="testimonial-stars">★★★★★</div>
+                    <blockquote>TEBO Construction delivered our office complex ahead of schedule and with impeccable attention to detail. Their team communicated clearly at every stage of the build.</blockquote>
+                    <div class="testimonial-author">
+                        <span class="avatar">AK</span>
+                        <div>
+                            <div class="name">Arben Krasniqi</div>
+                            <div class="role">CEO, Prishtina Business Group</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal delay-1">
+                    <span class="quote-mark">&ldquo;</span>
+                    <div class="testimonial-stars">★★★★★</div>
+                    <blockquote>From planning to handover, the professionalism was outstanding. Our residential tower was built with premium materials and genuine craftsmanship throughout.</blockquote>
+                    <div class="testimonial-author">
+                        <span class="avatar">LB</span>
+                        <div>
+                            <div class="name">Liridona Berisha</div>
+                            <div class="role">Property Developer</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal delay-2">
+                    <span class="quote-mark">&ldquo;</span>
+                    <div class="testimonial-stars">★★★★★</div>
+                    <blockquote>Reliable, transparent and highly skilled. TEBO renovated our retail space with minimal disruption to our business - the result exceeded every expectation.</blockquote>
+                    <div class="testimonial-author">
+                        <span class="avatar">DG</span>
+                        <div>
+                            <div class="name">Driton Gashi</div>
+                            <div class="role">Retail Chain Owner</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work With Us Section -->
+    <section class="work-with-us reveal">
+        <div class="work-with-us-content">
+            <span class="eyebrow">Start Your Project</span>
+            <h2>Let's Build Something Great Together</h2>
+            <p>Join forces with the industry's leading construction company. We bring your vision to life with expertise, innovation, and dedication to excellence.</p>
+            <a href="/views/contact.html" class="cta-button"><i class="bi bi-send"></i> Contact Us Today</a>
+        </div>
+    </section>
+
+    <footer class="footer reveal">
+        <div class="footer-divider"></div>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="/images/logo.png" alt="TEBO Logo" class="footer-logo">
+                <p class="footer-tagline">Premium construction services built on two decades of trust, craftsmanship and innovation.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" class="social-link" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="social-link" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="social-link" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-info">
+                <h3>Contact</h3>
+                <div class="contact-row">
+                    <div class="contact-item">
+                        <span><i class="bi bi-geo-alt"></i>123 Construction Ave, Prishtina, Kosovo</span>
+                    </div>
+                    <div class="contact-item">
+                        <span><i class="bi bi-envelope"></i>info@teboconstruction.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <span><i class="bi bi-telephone"></i>+383 (49) 116 898</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-social">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/views/about.html">About Us</a></li>
+                    <li><a href="/index.html#what-we-do">Services</a></li>
+                    <li><a href="/index.html#projects">Projects</a></li>
+                    <li><a href="/views/contact.html">Contact</a></li>
                 </ul>
             </div>
-            <div class="about-image reveal-right">
-                <img src="/images/expertteam.jpg" alt="Our Team" loading="lazy" width="600" height="600">
-            </div>
         </div>
-    </div>
-</section>
-
-<!-- What We Do Section -->
-<section id="what-we-do" class="what-we-do reveal" style="content-visibility:auto;contain-intrinsic-size:auto 500px">
-    <div class="container">
-        <h2 class="reveal">What We Do?</h2>
-        <div class="services-content">
-            <div class="service-box reveal">
-                <div class="service-icon">🏗️</div>
-                <h3>Construction Management</h3>
-                <p>Professional oversight of construction projects from planning to completion, ensuring quality and efficiency.</p>
-            </div>
-            <div class="service-box reveal">
-                <div class="service-icon">🏢</div>
-                <h3>Building Development</h3>
-                <p>Comprehensive building solutions for residential, commercial, and industrial projects.</p>
-            </div>
-            <div class="service-box reveal">
-                <div class="service-icon">🔧</div>
-                <h3>Renovation Services</h3>
-                <p>Expert renovation and remodeling services to transform existing structures into modern spaces.</p>
-            </div>
-            <div class="service-box reveal">
-                <div class="service-icon">📋</div>
-                <h3>Project Planning</h3>
-                <p>Detailed project planning and consulting services to ensure successful project execution.</p>
-            </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 TEBO Construction. All rights reserved.</p>
+            <p class="made-by"><i class="bi bi-code-slash"></i> Made by <strong>TeboTronic</strong></p>
         </div>
-    </div>
-</section>
+    </footer>
 
-<!-- Projects Section -->
-<section id="projects" class="projects-section reveal" style="content-visibility:auto;contain-intrinsic-size:auto 600px">
-    <div class="container">
-        <h2 class="reveal">Our Projects</h2>
-        <div id="projects-grid" class="projects-grid"></div>
-    </div>
-</section>
-
-<!-- Work With Us Section -->
-<section class="work-with-us reveal">
-    <div class="work-with-us-content reveal">
-        <h2>Work With Us</h2>
-        <p>Join forces with the industry's leading construction company. We bring your vision to life with expertise, innovation, and dedication to excellence.</p>
-        <a href="/views/contact.html" class="cta-button">Contact Us</a>
-    </div>
-</section>
-
-<footer class="footer reveal">
-    <div class="footer-divider"></div>
-    <div class="footer-content">
-        <div class="footer-brand">
-            <img src="/images/logo.png" alt="TEBO Logo" class="footer-logo">
-        </div>
-        <div class="footer-info">
-            <div class="contact-row">
-                <div class="contact-item">
-                    <span><i class="bi bi-geo-alt"></i>123 Construction Ave, Prishtina, Kosovo</span>
-                </div>
-                <div class="contact-separator"></div>
-                <div class="contact-item">
-                    <span><i class="bi bi-envelope"></i>info@teboconstruction.com</span>
-                </div>
-                <div class="contact-separator"></div>
-                <div class="contact-item">
-                    <span><i class="bi bi-telephone"></i>+383 (49) 116 898</span>
-                </div>
-            </div>
-            <ul class="footer-links">
-                <li><a href="/index.html">Home</a></li>
-                <li><a href="/views/about.html">About Us</a></li>
-                <li><a href="/index.html#what-we-do">Services</a></li>
-                <li><a href="/index.html#projects">Projects</a></li>
-                <li><a href="/views/contact.html">Contact</a></li>
-            </ul>
-        </div>
-        <div class="footer-social">
-            <h3>Follow Us</h3>
-            <div class="social-links">
-                <a href="#" class="social-link"><i class="fa-brands fa-x-twitter"></i></a>
-                <a href="#" class="social-link"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="social-link"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
-            </div>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p>&copy; 2024 TEBO Construction. All rights reserved.</p>
-        <p class="made-by"><i class="bi bi-code-slash"></i> Made by <strong>TeboTronic</strong></p>
-    </div>
-</footer>
-
-<script src="js/main.js" defer></script>
+    <script src="js/main.js" defer></script>
 </body>
 </html>

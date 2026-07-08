@@ -1,25 +1,26 @@
+/* ============================================================
+   TEBO Construction — Premium Preloader
+   ============================================================ */
+
 :root {
-    --preloader-bg: #ffffff;
-    --preloader-accent: rgba(123, 197, 26, 0.8);
-    --preloader-dark: rgba(30, 41, 59, 0.8);
-    --preloader-text: #1E293B;
+    --preloader-bg: #0b1220;
+    --preloader-accent: #7bc51a;
+    --preloader-accent-2: #9fdd33;
 }
 
 .preloader {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     background-color: var(--preloader-bg);
+    background-image: radial-gradient(circle at 50% 42%, rgba(123, 197, 26, 0.10) 0%, transparent 52%);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    transition: opacity 0.4s ease-out, visibility 0.4s ease-out;
+    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.6s;
     overflow: hidden;
-    will-change: opacity, visibility;
+    will-change: opacity;
 }
 
 .preloader.fade-out {
@@ -37,145 +38,88 @@
     width: 100%;
     max-width: 500px;
     padding: 0 20px;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.construction-animation {
-    position: relative;
-    width: 220px;
-    height: 180px;
-    margin-bottom: 40px;
-    will-change: transform;
+.preloader.fade-out .preloader-content {
+    transform: scale(1.06);
 }
 
+/* Logo with rotating ring + breathing aura */
 .logo-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 160px;
-    height: 160px;
+    position: relative;
+    width: 170px;
+    height: 170px;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 34px;
 }
 
-.logo-pulse {
+.logo-aura {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    inset: -20px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(205, 233, 45, 0.2) 0%, rgba(205, 233, 45, 0) 70%);
-    animation: pulse 2s infinite cubic-bezier(0.455, 0.03, 0.515, 0.955);
-    opacity: 0;
+    background: radial-gradient(circle, rgba(159, 221, 51, 0.16) 0%, transparent 65%);
+    animation: auraBreathe 2.6s ease-in-out infinite;
     will-change: transform, opacity;
 }
 
-.logo-pulse:nth-child(2) {
-    animation-delay: 0.4s;
-}
-
-.logo-pulse:nth-child(3) {
-    animation-delay: 0.8s;
-}
-
-.preloader-logo {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    z-index: 2;
-    animation: float 3s infinite ease-in-out;
-    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
+.logo-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        transparent 250deg,
+        rgba(123, 197, 26, 0.25) 290deg,
+        var(--preloader-accent-2) 360deg
+    );
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2.5px), #000 calc(100% - 2px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 2.5px), #000 calc(100% - 2px));
+    animation: ringSpin 1.6s linear infinite;
     will-change: transform;
 }
 
-.construction-element {
+.logo-ring::after {
+    content: '';
     position: absolute;
-    opacity: 0;
-    will-change: transform, opacity;
-}
-
-.beam {
-    width: 60px;
-    height: 10px;
-    background: var(--preloader-accent);
-    border-radius: 4px;
-}
-
-.beam-1 {
-    top: 20%;
-    left: 10%;
-    transform: rotate(-45deg);
-    animation: fadeInRotate 1.2s 0.2s forwards cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.beam-2 {
-    bottom: 20%;
-    right: 10%;
-    transform: rotate(45deg);
-    animation: fadeInRotate 1.2s 0.4s forwards cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.gear {
-    width: 30px;
-    height: 30px;
+    inset: 8px;
     border-radius: 50%;
-    border: 4px solid var(--preloader-dark);
-    border-left-color: transparent;
-    top: 70%;
-    left: 15%;
-    animation: fadeInSpin 1.5s 0.3s forwards cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.ruler {
-    width: 50px;
-    height: 10px;
-    background: var(--preloader-dark);
-    border-radius: 2px;
-    top: 20%;
-    right: 15%;
-    animation: fadeInScale 1.2s 0.5s forwards cubic-bezier(0.34, 1.56, 0.64, 1);
+.preloader-logo {
+    width: 96px;
+    height: 96px;
+    object-fit: contain;
+    z-index: 2;
+    filter: brightness(0) invert(1) drop-shadow(0 0 22px rgba(159, 221, 51, 0.25));
+    animation: logoBreathe 2.6s ease-in-out infinite;
+    will-change: transform;
 }
 
-.ruler::before {
-    content: '';
-    position: absolute;
-    top: -5px;
-    left: 5px;
-    width: 2px;
-    height: 20px;
-    background: var(--preloader-dark);
-}
-
-.ruler::after {
-    content: '';
-    position: absolute;
-    top: -5px;
-    left: 15px;
-    width: 2px;
-    height: 20px;
-    background: var(--preloader-dark);
-}
-
+/* Progress */
 .progress-container {
-    width: 250px;
-    height: 6px;
-    background: rgba(0, 0, 0, 0.05);
+    width: 210px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.08);
     border-radius: 3px;
     overflow: hidden;
     margin-bottom: 20px;
     position: relative;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) inset;
 }
 
 .progress-bar {
     height: 100%;
     width: 0%;
-    background: linear-gradient(to right, rgba(205, 233, 45, 0.8), rgba(123, 197, 26, 0.8));
+    background: linear-gradient(to right, var(--preloader-accent-2), var(--preloader-accent));
     border-radius: 3px;
     transition: width 0.2s cubic-bezier(0.22, 1, 0.36, 1);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: relative;
     overflow: hidden;
+    box-shadow: 0 0 12px rgba(159, 221, 51, 0.45);
     will-change: width;
 }
 
@@ -185,80 +129,51 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.6), transparent);
-    animation: progressGlow 2s infinite linear;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.65), transparent);
+    animation: progressGlow 1.6s infinite linear;
     will-change: transform;
 }
 
+/* Percentage */
 .loading-text {
-    color: var(--preloader-text);
-    font-size: 14px;
-    letter-spacing: 0.5px;
-    font-weight: 500;
     display: flex;
-    align-items: center;
-    gap: 5px;
-    transform: translateY(10px);
-    opacity: 0;
-    animation: fadeInUp 0.8s 0.3s forwards;
+    align-items: baseline;
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.85);
+    font-family: 'Archivo', 'Segoe UI', Arial, sans-serif;
 }
 
-.dot-animation {
-    display: inline-flex;
+.loading-text-percentage {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+    background: linear-gradient(120deg, #ffffff 30%, var(--preloader-accent-2) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.dot-animation span {
-    width: 4px;
-    height: 4px;
-    margin: 0 1px;
-    border-radius: 50%;
-    background-color: var(--preloader-text);
-    animation: dotPulse 1.5s infinite;
-    opacity: 0.7;
+.loading-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
 }
 
-.dot-animation span:nth-child(2) {
-    animation-delay: 0.2s;
+@keyframes ringSpin {
+    to { transform: rotate(360deg); }
 }
 
-.dot-animation span:nth-child(3) {
-    animation-delay: 0.4s;
+@keyframes auraBreathe {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.12); opacity: 1; }
 }
 
-.loading-status {
-    position: absolute;
-    bottom: 15%;
-    font-size: 13px;
-    color: var(--preloader-text);
-    opacity: 0.6;
-    text-align: center;
-    font-weight: 400;
-}
-
-@keyframes pulse {
-    0% { transform: scale(0.8); opacity: 0; }
-    50% { opacity: 0.8; }
-    100% { transform: scale(1.5); opacity: 0; }
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-@keyframes fadeInRotate {
-    0% { opacity: 0; transform: rotate(0deg) scale(0.5); }
-    100% { opacity: 1; transform: rotate(var(--rotation)) scale(1); }
-}
-
-@keyframes fadeInSpin {
-    0% { opacity: 0; transform: scale(0.5) rotate(0deg); }
-    100% { opacity: 0.8; transform: scale(1) rotate(360deg); }
-}
-
-@keyframes fadeInScale {
-    0% { opacity: 0; transform: scale(0.5); }
-    100% { opacity: 0.8; transform: scale(1); }
+@keyframes logoBreathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
 }
 
 @keyframes progressGlow {
@@ -266,70 +181,28 @@
     100% { left: 100%; }
 }
 
-@keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes dotPulse {
-    0%, 100% { transform: scale(1); opacity: 0.7; }
-    50% { transform: scale(1.5); opacity: 1; }
-}
-
-@media (max-width: 768px) {
-    .construction-animation {
-        width: 180px;
-        height: 140px;
-    }
-    
+@media (max-width: 480px) {
     .logo-container {
         width: 140px;
         height: 140px;
+        margin-bottom: 28px;
     }
-    
+
     .preloader-logo {
-        width: 80px;
-        height: 80px;
+        width: 78px;
+        height: 78px;
     }
-    
+
     .progress-container {
-        width: 220px;
-    }
-    
-    .beam {
-        width: 50px;
-        height: 8px;
-    }
-    
-    .gear {
-        width: 25px;
-        height: 25px;
-    }
-    
-    .ruler {
-        width: 40px;
-        height: 8px;
+        width: 180px;
     }
 }
 
-@media (max-width: 480px) {
-    .construction-animation {
-        width: 150px;
-        height: 120px;
-    }
-    
-    .logo-container {
-        width: 120px;
-        height: 120px;
-    }
-    
-    .preloader-logo {
-        width: 70px;
-        height: 70px;
-    }
-    
-    .progress-container {
-        width: 200px;
-        height: 5px;
+@media (prefers-reduced-motion: reduce) {
+    .logo-ring,
+    .logo-aura,
+    .preloader-logo,
+    .progress-glow {
+        animation: none;
     }
 }
